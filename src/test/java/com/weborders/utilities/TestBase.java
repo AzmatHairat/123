@@ -45,17 +45,25 @@ public abstract class TestBase {
     @BeforeTest
     public void setUpTest() {
         report = new ExtentReports();
+        //this is our custom location of the report that will be generated
+        //report will be generated in the current project inside folder: test-output
+        //report file name: report.html
         String filePath = System.getProperty("user.dir") + "/test-output/report.html";
+        //initialize the htmlReporter with the path to the report
         htmlReporter = new ExtentHtmlReporter(filePath);
 
+        //we attach the htmlreport to our report
         report.attachReporter(htmlReporter);
 
         report.setSystemInfo("Environment", "Staging");
         report.setSystemInfo("Browser", ConfigurationReader.getProperty("browser"));
         report.setSystemInfo("OS", System.getProperty("os.name"));
+        report.setSystemInfo("QA Engineer", "Azmat");
+
         htmlReporter.config().setDocumentTitle("Prestashop Reports");
         htmlReporter.config().setReportName("Prestashop Automated Test Reports");
-//        htmlReporter.config().setTheme(Theme.DARK);
+
+         htmlReporter.config().setTheme(Theme.DARK);
 
     }
 

@@ -15,18 +15,37 @@ public class PageHeadersTests extends TestBase {
 
     @Test
     public void pageHeadersTest(){
-        LoginPage loginPage = new LoginPage();
-        ViewAllProductsPage viewAllProductsPage = new ViewAllProductsPage();
-        ViewAllOrdersPage viewAllOrdersPage = new ViewAllOrdersPage();
-        OrderPage orderPage = new OrderPage();
 
-        loginPage.login(ConfigurationReader.getProperty("username"),
+        //
+        extentLogger = report.createTest("Page headers test");
+
+        extentLogger.info("Logging to the application");
+        pages.login().login(ConfigurationReader.getProperty("username"),
                 ConfigurationReader.getProperty("password"));
-        assertEquals(viewAllOrdersPage.header.getText(), ApplicationConstants.LIST_OF_ALL_ORDERS);
-        viewAllOrdersPage.viewAllProductsLink.click();
-        assertEquals(viewAllProductsPage.header.getText(), ApplicationConstants.LIST_OF_ALL_PRODUCTS);
-        viewAllProductsPage.orderLink.click();
-        assertEquals(orderPage.header.getText(), ApplicationConstants.ORDER);
+
+
+
+        //LoginPage loginPage = new LoginPage();
+//        ViewAllProductsPage viewAllProductsPage = new ViewAllProductsPage();
+//        ViewAllOrdersPage viewAllOrdersPage = new ViewAllOrdersPage();
+//        OrderPage orderPage = new OrderPage();
+
+        extentLogger.info("Verifying header for all orders page");
+        assertEquals(pages.viewAllOrders().header.getText(), ApplicationConstants.LIST_OF_ALL_ORDERS);
+
+        extentLogger.info("Clicking on view all products link");
+       pages.viewAllOrders().viewAllProductsLink.click();
+
+       extentLogger.info("Clicking on view all products page");
+        assertEquals(pages.viewAllProducts().header.getText(), ApplicationConstants.LIST_OF_ALL_PRODUCTS);
+
+        extentLogger.info("Clicking on order link");
+        pages.viewAllProducts().orderLink.click();
+
+        extentLogger.info("Verifying header for order page");
+        assertEquals(pages.order().header.getText(), ApplicationConstants.ORDER);
+
+        extentLogger.pass("Page headers test");
 
 
     }
